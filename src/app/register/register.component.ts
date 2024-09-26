@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, signal  , OnInit} from "@angular/core";
+import { Component, signal, OnInit, inject } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
@@ -7,12 +7,10 @@ import {
   ReactiveFormsModule,
   ValidatorFn,
   Validators,
-  ValidationErrors
+  ValidationErrors,
 } from "@angular/forms";
-import { RouterLink } from "@angular/router";
-
-
-
+import { Router, RouterLink } from "@angular/router";
+import { data } from "../models/data";
 
 @Component({
   selector: "app-register",
@@ -24,26 +22,35 @@ import { RouterLink } from "@angular/router";
 export class RegisterComponent {
   inputType = signal("password");
   inputType1 = signal("password");
+  //registration error
+  registrationErrorMessage: string = "";
+  //injecting the router service to use in navigation to other pages
+  router = inject(Router);
   // creating the form group to handle the registration form
-  registerForm: FormGroup = new FormGroup({
-    username: new FormControl("", [Validators.required, Validators.maxLength(30)]),
-    password: new FormControl("", [
-      Validators.required,
-      Validators.minLength(6),
-    ]),
-    confirmPassword: new FormControl("", [Validators.required]),
-  }, {
-    validators : this.passwordMatchValidator()
-  } );
-
-
+  registerForm: FormGroup = new FormGroup(
+    {
+      username: new FormControl("", [
+        Validators.required,
+        Validators.maxLength(30),
+      ]),
+      password: new FormControl("", [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+      confirmPassword: new FormControl("", [Validators.required]),
+    },
+    {
+      validators: this.passwordMatchValidator(),
+    }, 
+  );
+  // a function that checks if the password matches 
   passwordMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       // Check if the control is a FormGroup
       if (control instanceof FormGroup) {
-        const password = control.get('password')?.value;
-        const confirmPassword = control.get('confirmPassword')?.value;
-  
+        const password = control.get("password")?.value;
+        const confirmPassword = control.get("confirmPassword")?.value;
+
         // Return an error object if passwords do not match
         return password && confirmPassword && password !== confirmPassword
           ? { mismatch: true }
@@ -52,6 +59,9 @@ export class RegisterComponent {
       return null; // Return null if control is not a FormGroup
     };
   }
+
+
+
   changeInputType(val: string) {
     if (val == "password") {
       if (this.inputType() == "password") {
@@ -68,22 +78,43 @@ export class RegisterComponent {
     }
   }
 
+  // clear the error message
+  clearErrorMessage() {
+    setTimeout(() => {
+      this.registrationErrorMessage = "";
+    }, 10000);
+  }
 
+  // a function to clean up the spaces in the username and give it just one space 
+ 
 
   // submit registration form data
   handleRegistration() {
+    // get the input values
     let registrationInputs = this.registerForm.value;
-    console.log(registrationInputs);
-    this.registerForm.reset(); 
+    //check if username already exists
+    let username = localStorage.getItem(registrationInputs.username);
+    if (username) {
+      this.registerForm.reset();
+      this.registrationErrorMessage = "Username is already taken";
+      this.clearErrorMessage();
+    } else {
+      // store the data 
+      localStorage.setItem(
+        registrationInputs.username,
+        registrationInputs.password
+      );
+      // reset the form
+      this.registerForm.reset();
+      //navigate to login
+      this.router.navigateByUrl("/login");
+    }
   }
 
-  // a function to check if the passwords match
- 
+
 
   // return the form controls
- 
-  get field(){
-    return this.registerForm.controls; 
+  get field() {
+    return this.registerForm.controls;
   }
- 
 }
