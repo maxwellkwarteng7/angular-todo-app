@@ -72,9 +72,9 @@ export class RegisterComponent {
 
   // submit registration form data
   handleRegistration() {
-    console.log(this.registerForm.controls); 
     let registrationInputs = this.registerForm.value;
     console.log(registrationInputs);
+    this.registerForm.reset(); 
   }
 
   // a function to check if the passwords match
