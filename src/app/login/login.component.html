@@ -10,6 +10,7 @@
         </div>
         <p class="text-center tracking-wide py-3">Enter details to login</p>
         <!-- container to hold the input items  -->
+      <form action="" [formGroup]="loginForm" (ngSubmit)="handleLoginSubmission()">
         <div class="flex flex-col items-center gap-3 w-full my-5 text-sm">
           <div class="w-[80%] relative">
             <div class="absolute top-[20%] left-[5px]">
@@ -17,7 +18,7 @@
             </div>
             <input type="text" placeholder="username"
               class="bg-gray-100 text-sm md:text-md -lg rounded-md pl-7 w-full py-2 placeholder:text-black outline-none focus:border-b-[0.5px] focus:border-b-gray-600 focus:rounded-none"
-              name="username" [(ngModel)]="personDetails.username" />
+              name="username" formControlName="username" />
           </div>
           <div class="w-[80%] relative">
             <div class="absolute top-[20%] left-[5px]">
@@ -25,7 +26,7 @@
             </div>
             <input [type]="inputType()" placeholder="Password"
               class="text-sm md:text-md bg-gray-100 rounded-md w-full py-2 pl-7 pr-8 placeholder:text-black outline-none focus:bg-white focus:border-b-[0.5px] focus:border-b-gray-600 focus:rounded-none"
-              name="password" [(ngModel)]="personDetails.password" />
+              name="password" formControlName = "password" />
             <div (click)="changeInputType()" class="absolute right-[7px] top-[20%] cursor-pointer">
               <span [className]="
                   inputType() == 'password'
@@ -36,10 +37,11 @@
           </div>
         </div>
         <div class="flex flex-row items-center justify-center mt-5">
-          <button class="w-[80%] py-2 bg-primary shadow-md text-white rounded-full cursor-pointer" (click)="handleLoginSubmission()">
+          <button class="w-[80%] py-2 bg-primary shadow-md text-white rounded-full ">
             Login
           </button>
         </div>
+      </form>
         <!-- Dont have an account ?  -->
         <div class="flex items-center justify-center mt-5">
           <div class="flex items-center gap-2 text-sm md:text-md">
