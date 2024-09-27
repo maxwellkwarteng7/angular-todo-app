@@ -18,40 +18,52 @@
           </div>
         </div>
         <!-- the logout button -->
-        <button class="border-none rounded-[2rem] bg-black text-white md:py-[5px]  md:px-4  py-[4px] px-3 text-[15px]">
+        <button
+        (click)="handleLogout()"
+         class="border-none rounded-[2rem] bg-black text-white md:py-[5px]  md:px-4  py-[4px] px-3 text-[15px]">
           Logout
         </button>
       </div>
 
       <!-- the input field  -->
-      <form action="" class="my-10">
+      <form action="" class="my-10"[formGroup]="todoForm">
         <div class="relative">
           <input
             type="text"
             placeholder="Add your task"
             class="border-solid border-2 w-full py-3 pl-4 bg-gray-100 outline-none text-[14px] lg:text-[16px] pr-[25%]"
+            formControlName="todo"
           />
           <button
+          [disabled]="todoForm.invalid"
+          (click)="handleTodoSubmission()"
             type="submit"
             class="absolute right-0 border-none bg-primary text-white text-[14px] h-full px-[5%] md:px-[6%] lg:px-[7%] lg:text-[16px]"
           >
             Add
           </button>
         </div>
+        <div class="pt-1" *ngIf="f['todo']['errors'] && f['todo']['touched']">
+            <p class="text-[12px] pl-[2px] text-red-500" *ngIf="f['todo']['errors']['required']">Task is required</p>
+          </div>
       </form>
       <!-- where the todos will be  -->
        <div class="w-full">
-          <div class="flex items-center justify-between">
+        <!-- the todo items  -->
+          <div class="flex items-center justify-between shadow-sm py-3 border-b-[0.2px] border-b-gray-200">
             <div class="flex items-center">
                 <div class="pr-2">
-                    <div class="w-[20px] h-[20px] md:w-[25px] md:h-[25px]  rounded-full border-solid border-2 cursor-pointer">
+                    <div
+                    (click)="completed()"
+                     [className]="clicked ? 'w-[20px] h-[20px] md:w-[25px] md:h-[25px]  rounded-full cursor-pointer flex items-center justify-center bg-primary' : 'w-[20px] h-[20px] md:w-[25px] md:h-[25px]  rounded-full border-solid border-2 cursor-pointer flex items-center justify-center'"  >
+                        <span class="mdi mdi-check text-[12px] text-white "></span>
                     </div>
                 </div>
-                <p class="text-[13px] ml-3 md:text-[15px] ">make an api for the todo app for the long gain </p>
+                <p [className]="clicked ? 'text-[13px] line-through  ml-3 md:text-[15px]  ' : 'text-[13px] ml-3 md:text-[15px] '" >make an api for the todo app for the long gain </p>
             </div>
-          <div class="pl-4">
+          <div class="pl-5">
             <div class="w-[25px] h-[25px] rounded-full hover:bg-gray-200 bg-gray-100 md:w-[30px] md:h-[30px] cursor-pointer">
-                <h1 class="text-center">x</h1>
+                <h1 class="text-center md:text-[18px]">x</h1>
              </div>
           </div>
           </div>

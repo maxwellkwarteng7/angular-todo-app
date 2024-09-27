@@ -9,6 +9,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import { generateToken, storeUsername } from "../models/data";
 
 @Component({
   selector: "app-login",
@@ -31,6 +32,7 @@ export class LoginComponent {
   });
 
   changeInputType() {
+    // check input type variable and make necessary changes to th signal 
     if (this.inputType() == "password") {
       this.inputType.set("text");
     } else {
@@ -46,17 +48,27 @@ export class LoginComponent {
   }
 
   handleLoginSubmission() {
+
     let loginDetails = this.loginForm.value;
     const details = localStorage.getItem(loginDetails.username);
     if (details) {
       if (details === loginDetails.password) {
+        // set the global state username to the users username 
+        storeUsername(loginDetails.username); 
+        // generate a token of the user for authentication 
+        localStorage.setItem('token', generateToken()); 
+        // navigate the user to the todo page 
         this.router.navigateByUrl('/todo'); 
       } else {
+        // set the error message to the loginErrorMessage variable 
         this.loginErrorMessage = "Incorrect password, please try again.";
+        // clear the error message after some set time 
         this.clearLoginErrorMessage();
       }
     } else {
+       // set the error message to the loginErrorMessage variable 
       this.loginErrorMessage = "We cannot find an account for this username";
+       // clear the error message after some set time 
       this.clearLoginErrorMessage();
     }
     // reset the form
