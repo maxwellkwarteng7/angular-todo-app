@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './todo.component.scss'
 })
 export class TodoComponent {
-
+  hello: string = "Hello lovely people of God "; 
 }

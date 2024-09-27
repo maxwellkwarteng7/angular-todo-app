@@ -84,6 +84,13 @@ export class RegisterComponent {
       this.registrationErrorMessage = "";
     }, 10000);
   }
+  
+  //generate token 
+  generateToken() {
+    let generator = Math.ceil(Math.random() * 1000000) + '$token'; 
+    const token = JSON.stringify(generator); 
+    return token; 
+  }
 
   // a function to clean up the spaces in the username and give it just one space 
  
@@ -104,6 +111,7 @@ export class RegisterComponent {
         registrationInputs.username,
         registrationInputs.password
       );
+      localStorage.setItem('token', this.generateToken()); 
       // reset the form
       this.registerForm.reset();
       //navigate to login
