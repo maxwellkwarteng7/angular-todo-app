@@ -42,8 +42,6 @@ export class LoginComponent {
     }, 10000);
   }
 
-
-
   handleLoginSubmission() {
     let loginDetails = this.loginForm.value;
     const details = localStorage.getItem(loginDetails.username);
@@ -58,13 +56,12 @@ export class LoginComponent {
       this.loginErrorMessage = "We cannot find an account for this username";
       this.clearLoginErrorMessage();
     }
-    // reset the form 
+    // reset the form
     this.loginForm.reset({
       username: loginDetails.username,
       password: "",
     });
   }
-
 
   //getting all the login form controls
   get field() {
