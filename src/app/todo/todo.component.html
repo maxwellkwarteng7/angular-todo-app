@@ -1,2 +1,61 @@
-<p>todo works!</p>
-<h3>Welcome home todo component</h3>
+<div class="w-full h-[100vh] bg-center bg-cover bg-no-repeat" style="background-image:  url('todo-background.jpg');">
+  <!-- the todo card  -->
+  <div class="w-full h-full flex items-center justify-center relative">
+    <!-- the todo card itself -->
+    <div
+      class="w-[95%] min-h-[50%] rounded-xl lg: max-w-[500px] bg-white shadow-lg p-5 absolute top-[15%]"
+    >
+      <!-- the contents of the todo card -->
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <p class="text-black font-bold text-lg">To-Do List</p>
+          <div class="w-[24px] h-[24px] overflow-hidden">
+            <img
+              src="/todo-icon.png"
+              alt="..icon"
+              class="object-cover w-full h-full"
+            />
+          </div>
+        </div>
+        <!-- the logout button -->
+        <button class="border-none rounded-[2rem] bg-black text-white md:py-[5px]  md:px-4  py-[4px] px-3 text-[15px]">
+          Logout
+        </button>
+      </div>
+
+      <!-- the input field  -->
+      <form action="" class="my-10">
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Add your task"
+            class="border-solid border-2 w-full py-3 pl-4 bg-gray-100 outline-none text-[14px] lg:text-[16px] pr-[25%]"
+          />
+          <button
+            type="submit"
+            class="absolute right-0 border-none bg-primary text-white text-[14px] h-full px-[5%] md:px-[6%] lg:px-[7%] lg:text-[16px]"
+          >
+            Add
+          </button>
+        </div>
+      </form>
+      <!-- where the todos will be  -->
+       <div class="w-full">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="pr-2">
+                    <div class="w-[20px] h-[20px] md:w-[25px] md:h-[25px]  rounded-full border-solid border-2 cursor-pointer">
+                    </div>
+                </div>
+                <p class="text-[13px] ml-3 md:text-[15px] ">make an api for the todo app for the long gain </p>
+            </div>
+          <div class="pl-4">
+            <div class="w-[25px] h-[25px] rounded-full hover:bg-gray-200 bg-gray-100 md:w-[30px] md:h-[30px] cursor-pointer">
+                <h1 class="text-center">x</h1>
+             </div>
+          </div>
+          </div>
+       </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
-import { Component, signal } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Component, inject, signal } from "@angular/core";
+import { Router, RouterLink } from "@angular/router";
 import { LoginInfo } from "../models/class";
 import {
   FormControl,
@@ -20,6 +20,9 @@ import { CommonModule } from "@angular/common";
 export class LoginComponent {
   inputType = signal("password");
   loginErrorMessage: string = "";
+
+  // injecting the router service to use it 
+  router = inject(Router); 
 
   personDetails: LoginInfo = new LoginInfo();
   loginForm: FormGroup = new FormGroup({
@@ -47,7 +50,7 @@ export class LoginComponent {
     const details = localStorage.getItem(loginDetails.username);
     if (details) {
       if (details === loginDetails.password) {
-        alert("Login successful");
+        this.router.navigateByUrl('/todo'); 
       } else {
         this.loginErrorMessage = "Incorrect password, please try again.";
         this.clearLoginErrorMessage();
