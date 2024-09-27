@@ -1,6 +1,7 @@
 <div class="w-full h-[100vh] bg-center bg-cover bg-no-repeat" style="background-image:  url('todo-background.jpg');">
   <!-- the todo card  -->
   <div class="w-full h-full flex items-center justify-center relative">
+
     <!-- the todo card itself -->
     <div
       class="w-[95%] min-h-[50%] rounded-xl lg: max-w-[500px] bg-white shadow-lg p-5 absolute top-[15%]"
@@ -50,23 +51,32 @@
       <!-- where the todos will be  -->
        <div class="w-full">
         <!-- the todo items  -->
-          <div class="flex items-center justify-between shadow-sm py-3 border-b-[0.2px] border-b-gray-200">
-            <div class="flex items-center">
-                <div class="pr-2">
-                    <div
-                    (click)="completed()"
-                     [className]="clicked ? 'w-[20px] h-[20px] md:w-[25px] md:h-[25px]  rounded-full cursor-pointer flex items-center justify-center bg-primary' : 'w-[20px] h-[20px] md:w-[25px] md:h-[25px]  rounded-full border-solid border-2 cursor-pointer flex items-center justify-center'"  >
-                        <span class="mdi mdi-check text-[12px] text-white "></span>
+         @if(userTodos()){
+            @for (item of userTodos(); track $index) {
+                <div class="flex items-center justify-between shadow-sm py-3 my-2 border-b-[0.2px] border-b-gray-200">
+                    <div class="flex items-center">
+                        <div class="pr-2">
+                            <div
+                            (click)="completed()"
+                             [className]="clicked ? 'w-[20px] h-[20px] md:w-[25px] md:h-[25px]  rounded-full cursor-pointer flex items-center justify-center bg-primary' : 'w-[20px] h-[20px] md:w-[25px] md:h-[25px]  rounded-full border-solid border-2 cursor-pointer flex items-center justify-center'"  >
+                                <span class="mdi mdi-check text-[12px] text-white "></span>
+                            </div>
+                        </div>
+                        <p [className]="clicked ? 'text-[13px] line-through  ml-3 md:text-[15px]  ' : 'text-[13px] ml-3 md:text-[15px] '" >{{item.task}} </p>
                     </div>
-                </div>
-                <p [className]="clicked ? 'text-[13px] line-through  ml-3 md:text-[15px]  ' : 'text-[13px] ml-3 md:text-[15px] '" >make an api for the todo app for the long gain </p>
+                  <div class="pl-5">
+                    <div class="w-[25px] h-[25px] rounded-full hover:bg-gray-200 bg-gray-100 md:w-[30px] md:h-[30px] cursor-pointer">
+                        <h1 class="text-center md:text-[18px]">x</h1>
+                     </div>
+                  </div>
+                  </div>
+            }
+         }@else {
+            <div class="text-center text-[14px]">
+                No todo items added ...
             </div>
-          <div class="pl-5">
-            <div class="w-[25px] h-[25px] rounded-full hover:bg-gray-200 bg-gray-100 md:w-[30px] md:h-[30px] cursor-pointer">
-                <h1 class="text-center md:text-[18px]">x</h1>
-             </div>
-          </div>
-          </div>
+         }
+         
        </div>
     </div>
   </div>
