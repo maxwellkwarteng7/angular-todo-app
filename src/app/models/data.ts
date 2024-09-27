@@ -1,5 +1,5 @@
 
-
+import { todo } from "./interface";
 
 export function storeUsername(val: string) {
   // access the username first
@@ -23,3 +23,14 @@ export function getUsernameAsKey () {
 
 }
 
+
+export function getAllUserTodos() : null  | todo[] {
+    let key = getUsernameAsKey();
+    let todos   = localStorage.getItem(key); 
+    if (todos) {
+        let userTodos : todo[] = JSON.parse(todos); 
+        return userTodos
+    } else {
+        return null;
+    }
+}

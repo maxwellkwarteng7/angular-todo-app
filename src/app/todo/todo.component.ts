@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component  , OnInit} from '@angular/core';
+import { Component  , OnInit, signal, Signal} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { getUsernameAsKey } from '../models/data';
+import { getAllUserTodos, getUsernameAsKey } from '../models/data';
 import { Router } from '@angular/router';
 import { todo } from '../models/interface';
 
@@ -14,13 +14,17 @@ import { todo } from '../models/interface';
 })
 export class TodoComponent implements OnInit {
   
-
+  userTodos = signal<todo [] | null >([]); 
 
   constructor(private router: Router) { }
+
   
   ngOnInit(): void {
-  
+    this.userTodos.set(getAllUserTodos());  
+    console.log(this.userTodos()); 
   }
+
+  
   
   clicked: boolean = false; 
 
@@ -50,16 +54,17 @@ export class TodoComponent implements OnInit {
 
   handleTodoSubmission() {
     const task = this.todoForm.value; 
+    console.log(task); 
   
     let newTodo: todo[] = [
       {
-        task, 
+        task : task.todo  ,  
         id: this.generateKey()
       }
     ]
 
     let updateTodo: todo = {
-      task, 
+      task : task.todo  ,  
       id : this.generateKey()
     }
 
@@ -82,6 +87,9 @@ export class TodoComponent implements OnInit {
       // reset the form 
       this.resetForm(); 
 
+      // get all the todos after an update 
+      getAllUserTodos(); 
+
       alert('Todos have been updated'); 
     } else {
         // stringifying the newTodo object to store 
@@ -90,6 +98,10 @@ export class TodoComponent implements OnInit {
     //storing the todo in the local storage 
       localStorage.setItem(key, Todo);
 
+      // get all the todos after an update 
+      getAllUserTodos(); 
+      
+      //reset the form 
       this.resetForm();
       
       alert('New todo added'); 
@@ -103,7 +115,6 @@ export class TodoComponent implements OnInit {
     localStorage.removeItem('token'); 
     localStorage.removeItem('store'); 
     this.router.navigateByUrl('/login'); 
-
   }
 
 }
