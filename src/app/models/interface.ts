@@ -8,3 +8,11 @@ export interface todo {
   task: string, 
   id : number 
 }
+
+
+export enum Icon {
+  success = 'success', 
+  error = 'error', 
+  info = 'info', 
+  warning = 'warning'
+}
