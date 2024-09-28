@@ -24,8 +24,11 @@ export class TodoComponent implements OnInit {
   userTodos = signal<todo[] | null>([]);
 
   ngOnInit(): void {
+    this.fetchAndAssignTodos(); 
+  }
+
+  fetchAndAssignTodos() {
     this.userTodos.set(getAllUserTodos());
-    console.log(this.userTodos());
   }
 
   clicked: boolean = false;
@@ -88,7 +91,7 @@ export class TodoComponent implements OnInit {
       this.resetForm();
 
       // get all the todos after an update
-      getAllUserTodos();
+      this.fetchAndAssignTodos(); 
 
       this.notify.showSuccess("Updated TodoList", "");
     } else {
@@ -99,32 +102,46 @@ export class TodoComponent implements OnInit {
       localStorage.setItem(key, Todo);
 
       // get all the todos after an update
-      getAllUserTodos();
+      this.fetchAndAssignTodos(); 
+
+      // show success message 
+      this.notify.showSuccess("New Todo added", "");
+
 
       //reset the form
       this.resetForm();
-
-      this.notify.showSuccess("New Todod Added", "");
     }
   }
 
   handleLogout() {
-    // we will ask if the wants to really logout
-    // let's remove the token
-    localStorage.removeItem("token");
-    localStorage.removeItem("store");
-    this.router.navigateByUrl("/login");
+    this.notify.showConfirmation("Proceed to Logout ?", "").then((res) => {
+      if (res.isConfirmed) {
+        // we will ask if the wants to really logout
+        // let's remove the token
+        localStorage.removeItem("token");
+        localStorage.removeItem("store");
+        this.router.navigateByUrl("/login");
+      }
+    });
   }
 
   // handle todo delete
   handleDelete(id: number) {
-    this.notify.showConfirmation('Are you sure you want to delete ?', 'You cannot revert this ').then(result => {
-      if (result.isConfirmed) {
-        let userTodos = getAllUserTodos();
-        // let's find the particular todo
-        let todo = userTodos?.find((todo) => todo.id == id);
-        console.log(todo);
-      }
-    });
+    this.notify
+      .showConfirmation(
+        "Proceed to delete ?",
+        "You cannot revert this "
+      )
+      .then((result) => {
+        if (result.isConfirmed) {
+          let userTodos = getAllUserTodos();
+          // let's filter out this  particular todo
+          let newTodos = userTodos?.filter((todo) => todo.id != id);
+          // store the new array of todos 
+          let key = getUsernameAsKey(); 
+          localStorage.setItem(key, JSON.stringify(newTodos));
+          this.fetchAndAssignTodos();
+        }
+      });
   }
 }

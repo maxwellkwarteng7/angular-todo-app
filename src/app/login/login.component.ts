@@ -48,6 +48,7 @@ export class LoginComponent {
   }
 
   handleLoginSubmission() {
+  
 
     let loginDetails = this.loginForm.value;
     const details = localStorage.getItem(loginDetails.username);

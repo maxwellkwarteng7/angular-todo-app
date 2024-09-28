@@ -13,8 +13,6 @@ export class NotificationService {
       title: title,
       text: message,
       icon: Icon.success, 
-      timer: 4000 ,
-      timerProgressBar: true 
     });
   }
   // a confirmation message to ask before we proceed with the action
@@ -28,8 +26,8 @@ export class NotificationService {
       cancelButtonText: "No",
       showConfirmButton: true,
       confirmButtonText: "Yes",
-      cancelButtonColor: 'black', 
-      confirmButtonColor : "#ff653e"
+      cancelButtonColor: 'red', 
+      confirmButtonColor : "#28a745"
     });
   }
 }
