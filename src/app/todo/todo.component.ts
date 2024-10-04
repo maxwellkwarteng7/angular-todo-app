@@ -10,11 +10,12 @@ import { getAllUserTodos, getUsernameAsKey } from "../models/data";
 import { Router } from "@angular/router";
 import { todo } from "../models/interface";
 import { NotificationService } from "../services/notification.service";
+import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 
 @Component({
   selector: "app-todo",
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule , NgxSkeletonLoaderModule],
   templateUrl: "./todo.component.html",
   styleUrl: "./todo.component.scss",
 })
@@ -23,8 +24,15 @@ export class TodoComponent implements OnInit {
 
   userTodos = signal<todo[] | null>([]);
 
+  // a loading variable to track whether our todos are fetched or not 
+  loading: boolean = true; 
+
   ngOnInit(): void {
-    this.fetchAndAssignTodos(); 
+    setTimeout(() => {
+      this.fetchAndAssignTodos(); 
+      this.loading = false; 
+    }, 3000);
+
   }
 
   fetchAndAssignTodos() {

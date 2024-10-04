@@ -12,7 +12,6 @@ import {
 import { Router, RouterLink } from "@angular/router";
 
 
-
 @Component({
   selector: "app-register",
   standalone: true,
@@ -25,6 +24,7 @@ export class RegisterComponent {
   inputType1 = signal("password");
   //registration error
   registrationErrorMessage: string = "";
+  title: string = "title of the page "; 
   //injecting the router service to use in navigation to other pages
   router = inject(Router);
   // creating the form group to handle the registration form

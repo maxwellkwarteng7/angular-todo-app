@@ -51,6 +51,11 @@
       <!-- where the todos will be  -->
        <div class="w-full">
         <!-- the todo items  -->
+      
+        <div class="flex items-center justify-between" *ngIf="">
+
+        </div>
+    
          @if(userTodos()){
             @for (item of userTodos(); track $index) {
                 <div class="flex items-center justify-between shadow-sm py-3 my-2 border-b-[0.2px] border-b-gray-200">
