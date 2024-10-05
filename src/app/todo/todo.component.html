@@ -60,15 +60,19 @@
       <div class="w-full">
         <!-- the todo items  -->
 
-        <div class="flex-col justify-center gap-3" *ngIf="loading">
-          <div class="flex items-center justify-between gap-4">
+        <div class="flex-col justify-center" *ngIf="loading">
+          <div class="flex items-center justify-between gap-4" *ngFor="let item of userTodos()">
             <ngx-skeleton-loader
               count="1"
               appearance="circle"
             ></ngx-skeleton-loader>
             <ngx-skeleton-loader
-              count="20"
-              appearance="line"
+              class="w-[250px]"
+              [theme]="{
+                'border-radius': '0',
+                height: '20px',
+                'margin-bottom': '0px'
+              }"
             ></ngx-skeleton-loader>
             <ngx-skeleton-loader
               count="1"
