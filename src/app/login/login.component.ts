@@ -10,8 +10,7 @@ import {
 } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { generateToken, storeUsername } from "../models/data";
-
-
+import nProgress from "nprogress";
 
 @Component({
   selector: "app-login",
@@ -53,17 +52,21 @@ export class LoginComponent {
 
   handleLoginSubmission() {
   
-
     let loginDetails = this.loginForm.value;
     const details = localStorage.getItem(loginDetails.username);
     if (details) {
       if (details === loginDetails.password) {
+        nProgress.start(); 
         // set the global state username to the users username 
         storeUsername(loginDetails.username); 
         // generate a token of the user for authentication 
         localStorage.setItem('token', generateToken()); 
         // navigate the user to the todo page 
-        this.router.navigateByUrl('/todo'); 
+        setTimeout(() => {
+          this.router.navigateByUrl('/todo'); 
+          nProgress.done(); 
+        }, 5000);
+        
       } else {
         // set the error message to the loginErrorMessage variable 
         this.loginErrorMessage = "Incorrect password, please try again.";

@@ -6,3 +6,13 @@
 * {
   font-family: "Poppins", sans-serif;
 }
+
+
+#nprogress .bar {
+  background : #ff653e ; 
+  height : 5px ; 
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #ff5733, 0 0 5px #ff5733; /* Same color for a consistent look */
+}
