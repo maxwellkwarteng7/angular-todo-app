@@ -28,10 +28,10 @@ export class TodoComponent implements OnInit {
   loading: boolean = true; 
 
   ngOnInit(): void {
+    this.fetchAndAssignTodos(); 
     setTimeout(() => {
-      this.fetchAndAssignTodos(); 
       this.loading = false; 
-    }, 3000);
+    }, 2000);
 
   }
 
