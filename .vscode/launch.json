@@ -19,7 +19,7 @@
     {
       "name": "Launch-App" , 
       "request": "launch",
-      "type": "chrome" , 
+      "type": "chrome", 
       "url": "http://localhost:4200" , 
       "webRoot": "${workspaceFolder}",
     }
