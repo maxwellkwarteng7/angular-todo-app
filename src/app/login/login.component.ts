@@ -11,6 +11,8 @@ import {
 import { CommonModule } from "@angular/common";
 import { generateToken, storeUsername } from "../models/data";
 
+
+
 @Component({
   selector: "app-login",
   standalone: true,
@@ -21,6 +23,8 @@ import { generateToken, storeUsername } from "../models/data";
 export class LoginComponent {
   inputType = signal("password");
   loginErrorMessage: string = "";
+  //a variable to track the loading screen 
+  isLogginIn: boolean = true; 
 
   // injecting the router service to use it 
   router = inject(Router); 
