@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, signal, OnInit, inject } from "@angular/core";
+import { Component, signal, inject } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
@@ -20,8 +20,8 @@ import { Router, RouterLink } from "@angular/router";
   styleUrl: "./register.component.scss",
 })
 export class RegisterComponent {
-  inputType = signal("password");
-  inputType1 = signal("password");
+  inputType  = signal<string>("password");
+  inputType1  = signal<string>("password");
   //registration error
   registrationErrorMessage: string = "";
   title: string = "title of the page "; 
@@ -47,7 +47,7 @@ export class RegisterComponent {
   // a function that checks if the password matches 
   passwordMatchValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      // Check if the control is a FormGroup
+      // Check if the control is an instance of a  FormGroup
       if (control instanceof FormGroup) {
         const password = control.get("password")?.value;
         const confirmPassword = control.get("confirmPassword")?.value;
@@ -86,11 +86,6 @@ export class RegisterComponent {
     }, 10000);
   }
   
-  //generate token 
-
-
-  // a function to clean up the spaces in the username and give it just one space 
- 
 
   // submit registration form data
   handleRegistration() {

@@ -22,20 +22,18 @@ import nProgress from "nprogress";
 export class LoginComponent {
   inputType = signal("password");
   loginErrorMessage: string = "";
-  //a variable to track the loading screen 
-  isLogginIn: boolean = true; 
 
+  
   // injecting the router service to use it 
   router = inject(Router); 
 
-  personDetails: LoginInfo = new LoginInfo();
   loginForm: FormGroup = new FormGroup({
     username: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required]),
   });
 
   changeInputType() {
-    // check input type variable and make necessary changes to th signal 
+    // check input type variable and make necessary changes to the signal 
     if (this.inputType() == "password") {
       this.inputType.set("text");
     } else {
@@ -53,9 +51,12 @@ export class LoginComponent {
   handleLoginSubmission() {
   
     let loginDetails = this.loginForm.value;
-    const details = localStorage.getItem(loginDetails.username);
-    if (details) {
-      if (details === loginDetails.password) {
+    // check if the key exists. if it does it means we have the user registered and the password is the value for the username 
+    const savedPassword = localStorage.getItem(loginDetails.username);
+    console.log("userpassword", savedPassword);
+    if (savedPassword) {
+      // check if the passwword matches the password the user entered . 
+      if (savedPassword === loginDetails.password) {
         nProgress.start(); 
         // set the global state username to the users username 
         storeUsername(loginDetails.username); 
@@ -65,7 +66,7 @@ export class LoginComponent {
         setTimeout(() => {
           this.router.navigateByUrl('/todo'); 
           nProgress.done(); 
-        }, 5000);
+        }, 2000);
         
       } else {
         // set the error message to the loginErrorMessage variable 

@@ -23,23 +23,25 @@ export class TodoComponent implements OnInit {
   constructor(private router: Router, private notify: NotificationService) {}
 
   userTodos = signal<todo[] | null>([]);
+  username = signal<string | null>('');
 
   // a loading variable to track whether our todos are fetched or not 
   loading: boolean = true; 
+  clicked: boolean = false;
+
 
   ngOnInit(): void {
+    this.username.set(localStorage.getItem('username') || null);
     this.fetchAndAssignTodos(); 
     setTimeout(() => {
       this.loading = false; 
     }, 2000);
-
   }
 
   fetchAndAssignTodos() {
     this.userTodos.set(getAllUserTodos());
   }
 
-  clicked: boolean = false;
 
   todoForm: FormGroup = new FormGroup({
     todo: new FormControl("", [Validators.required]),
@@ -124,11 +126,11 @@ export class TodoComponent implements OnInit {
   handleLogout() {
     this.notify.showConfirmation("Proceed to Logout ?", "").then((res) => {
       if (res.isConfirmed) {
-        // we will ask if the wants to really logout
+
         // let's remove the token
         localStorage.removeItem("token");
-        localStorage.removeItem("store");
-        this.router.navigateByUrl("/login");
+        localStorage.removeItem("username");
+        window.location.href = '/login'; 
       }
     });
   }

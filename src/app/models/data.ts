@@ -5,7 +5,7 @@ export function storeUsername(val: string) {
   // access the username first
   const username: string = val ;
   // store it in the local storage
-  localStorage.setItem("store", username);
+  localStorage.setItem("username", username);
 }
 
 
@@ -17,7 +17,7 @@ export function generateToken() {
 
 
 export function getUsernameAsKey () {
-    let username = localStorage.getItem('store'); 
+    let username = localStorage.getItem('username'); 
     const key = username + 'todoId'; 
     return key; 
 

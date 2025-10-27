@@ -20,6 +20,7 @@
             />
           </div>
         </div>
+       
         <!-- the logout button -->
         <button
           (click)="handleLogout()"
@@ -28,6 +29,11 @@
           Logout
         </button>
       </div>
+
+       <!-- The welcome message  -->
+         <div class="my-2">
+          <h1>Welcome , {{username() || 'user'}} 😎</h1>
+         </div>
 
       <!-- the input field  -->
       <form action="" class="my-10" [formGroup]="todoForm">
@@ -59,9 +65,12 @@
       <!-- where the todos will be  -->
       <div class="w-full">
         <!-- the todo items  -->
-
-        <div class="flex-col justify-center" *ngIf="loading">
-          <div class="flex items-center justify-between gap-4" *ngFor="let item of userTodos()">
+        @if(loading){
+        <div class="flex-col justify-center">
+          <div
+            class="flex items-center justify-between gap-4"
+            *ngFor="let item of userTodos()"
+          >
             <ngx-skeleton-loader
               count="1"
               appearance="circle"
@@ -80,9 +89,9 @@
             ></ngx-skeleton-loader>
           </div>
         </div>
-
-        @if(userTodos()){ @for (item of userTodos(); track $index) {
-        <div *ngIf="!loading">
+        }@else { 
+           @for (item of userTodos(); track $index) {
+        <div>
           <div
             class="flex items-center justify-between shadow-sm py-3 my-2 border-b-[0.2px] border-b-gray-200"
           >
@@ -121,9 +130,10 @@
             </div>
           </div>
         </div>
-        } }@else {
-        <div class="text-center text-[14px]">No todo items added ...</div>
+        }@empty { 
+           <div class="text-center text-[14px]">No todo items added ...</div>
         }
+       }
       </div>
     </div>
   </div>

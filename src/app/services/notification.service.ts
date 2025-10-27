@@ -20,14 +20,14 @@ export class NotificationService {
     return Swal.fire({
       title: title,
       text: message,
-      width : '360px' , 
+      width : '420px' , 
       icon: Icon.warning,
       showCancelButton: true,
       cancelButtonText: "No",
       showConfirmButton: true,
       confirmButtonText: "Yes",
       cancelButtonColor: 'red', 
-      confirmButtonColor : "#28a745"
+      confirmButtonColor : "black"
     });
   }
 }

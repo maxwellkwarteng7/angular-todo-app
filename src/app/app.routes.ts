@@ -1,9 +1,9 @@
 import { Routes } from "@angular/router";
 import { LoginComponent } from "./login/login.component";
 import { RegisterComponent } from "./register/register.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
 import { TodoComponent } from "./todo/todo.component";
 import { authGuard } from "./auth.guard";
+import { unauthenticatedGuardGuard } from "./unauthenticated-guard.guard";
 
 export const routes: Routes = [
   {
@@ -14,20 +14,16 @@ export const routes: Routes = [
   {
     path: "login",
     component: LoginComponent,
+    canActivate: [unauthenticatedGuardGuard]
   },
   {
     path: "register",
     component: RegisterComponent,
+    canActivate: [unauthenticatedGuardGuard]
   },
   {
-    path: "",
-    component: DashboardComponent,
+    path: "todo",
+    component: TodoComponent,
     canActivate: [authGuard],
-    children: [
-      {
-        path: "todo",
-        component: TodoComponent,
-      },
-    ],
   },
 ];
